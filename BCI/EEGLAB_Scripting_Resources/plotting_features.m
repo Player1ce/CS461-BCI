@@ -5,8 +5,8 @@ EEG = pop_loadset('filename', 'p1.set', 'filepath', pwd );
 EEG = pop_chanedit(EEG, 'changefield',{1 'labels' 'TP9'}, 'changefield',{2 'labels' 'AF7'},'changefield',{3 'labels' 'AF8'}, 'changefield', {4 'labels' 'TP10'});
 
 % Define variables
-epochIndex = 1;
-channelNumber = 2;
+epochIndex = 32;
+channelNumber = 1;
 totalSamples = 220;
 epochLen = 1000;
 sampleRate = 220;
@@ -20,11 +20,14 @@ epoch = EEG.data(channelNumber,:,epochIndex);
 % Get Band power
 alpha = bandpower(pxx, freq, [9 14], 'psd');
 beta = bandpower(pxx, freq, [15 30], 'psd');
+delta = bandpower(pxx, freq, [1 3], 'psd');
+theta = bandpower(pxx, freq, [4 8], 'psd');
+
 
 % Plot Band Power (Bar Plot)
-x = categorical({'Alpha', 'Beta'});
-x = reordercats(x,{'Beta', 'Alpha'});
-y = [alpha beta];
+x = categorical({'Delta', 'Theta', 'Alpha', 'Beta'});
+% x = reordercats(x,{'Beta', 'Alpha'});
+y = [delta theta alpha beta];
 
 % Create Figure
 figure
